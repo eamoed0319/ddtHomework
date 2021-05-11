@@ -1,0 +1,24 @@
+package com.ddt.homework.demo.model;
+
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+@Data
+@Entity
+@Table(name = "department")
+public class Department {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(nullable = false)
+    private String name;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name="departmentID", referencedColumnName = "id")
+    private List<Employee> employees;
+}
