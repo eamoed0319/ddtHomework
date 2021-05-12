@@ -12,14 +12,14 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "department")
+@Table(name = "Department")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "department",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    private List<Employee> employees = new ArrayList<>();
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Employee> employees;
 }

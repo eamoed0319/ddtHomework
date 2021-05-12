@@ -13,29 +13,22 @@ import java.util.Date;
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "employee")
+@Table(name = "Employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(nullable = false)
+    private Long id;
     private String name;
-    @Column(nullable = false)
     private Integer gender;
-    @Column(nullable = false)
     private String phoneNumber;
-    @Column(nullable = false)
     private String address;
-    @Column(nullable = false)
     private Integer age;
     @CreatedDate
-    @Column(nullable = false)
     private Date createTime;
     @LastModifiedDate
-    @Column(nullable = false)
     private Date updateTime;
 
-    @ManyToOne(targetEntity = Department.class,fetch = FetchType.LAZY)
-    @JoinColumn(name="department_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="department_id")
     private Department department;
 }

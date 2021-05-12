@@ -13,7 +13,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping(value = "/{name}")
-    public Employee getOneEmployee(@RequestParam(value = "name", required = true) String name){
+    public Employee getOneEmployee(@PathVariable String name){
         return employeeService.findByName(name);
     }
 }
