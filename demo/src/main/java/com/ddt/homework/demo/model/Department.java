@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Department {
     private Integer id;
     @Column(nullable = false)
     private String name;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name="departmentID", referencedColumnName = "id")
-    private List<Employee> employees;
+
+    @OneToMany(mappedBy = "department",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private List<Employee> employees = new ArrayList<>();
 }

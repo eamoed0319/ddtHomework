@@ -21,8 +21,6 @@ public class Employee {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private Integer departmentID;
-    @Column(nullable = false)
     private Integer gender;
     @Column(nullable = false)
     private String phoneNumber;
@@ -37,10 +35,7 @@ public class Employee {
     @Column(nullable = false)
     private Date updateTime;
 
-    @ManyToOne
-    @JoinColumn(name="departmentID")
+    @ManyToOne(targetEntity = Department.class,fetch = FetchType.LAZY)
+    @JoinColumn(name="department_id", referencedColumnName = "id")
     private Department department;
-
-
-
 }
