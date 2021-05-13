@@ -1,20 +1,31 @@
 package com.ddt.homework.demo.model;
 
-import com.sun.tracing.ProviderName;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
-@Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "Employee")
+@Data
 public class Employee {
+
+    public Employee() {
+    }
+
+    public Employee(String name, Integer gender, String phoneNumber, String address, Integer age, Department department) {
+        this.name = name;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.age = age;
+        this.department = department;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

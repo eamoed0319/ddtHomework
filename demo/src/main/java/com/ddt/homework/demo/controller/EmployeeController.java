@@ -1,8 +1,11 @@
 package com.ddt.homework.demo.controller;
 
+import com.ddt.homework.demo.model.Department;
 import com.ddt.homework.demo.model.Employee;
+import com.ddt.homework.demo.model.EmployeeVO;
 import com.ddt.homework.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,8 +15,47 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{name}")
-    public Employee getOneEmployee(@PathVariable String name){
+    public EmployeeVO getOneEmployee(@PathVariable String name){
         return employeeService.findByName(name);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/new")
+    public EmployeeVO addEmployee(@RequestParam String name,
+                                  @RequestParam Integer gender,
+                                  @RequestParam String phoneNumber,
+                                  @RequestParam String address,
+                                  @RequestParam Integer age,
+                                  @RequestParam Long departmentId){
+        Department department = new Department();
+        department.setId(departmentId);
+        Employee employee = new Employee(name, gender, phoneNumber, address, age, department);
+        return employeeService.save(employee);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(value = "/update")
+    public EmployeeVO updateEmployee(@RequestParam long id,
+                                     @RequestParam String name,
+                                     @RequestParam Integer gender,
+                                     @RequestParam String phoneNumber,
+                                     @RequestParam String address,
+                                     @RequestParam Integer age,
+                                     @RequestParam Long departmentId){
+        Department department = new Department();
+        department.setId(departmentId);
+        Employee employee = new Employee(name, gender, phoneNumber, address, age, department);
+        employee.setId(id);
+        employee.setCreateTime(employeeService.getOne(id).getCreateTime());
+        return employeeService.save(employee);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(value = "/{id}")
+    public String deleteEmployee(@PathVariable long id){
+        employeeService.deleteById(id);
+        return "SUCCESS";
     }
 }
