@@ -1,5 +1,6 @@
 package com.ddt.homework.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
@@ -17,7 +18,6 @@ import java.util.List;
 @Entity
 @Table(name = "Department")
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler"})
-@JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
 public class Department implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,7 @@ public class Department implements Serializable {
     @Column(nullable = false)
     private String name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Employee> employees;
 }

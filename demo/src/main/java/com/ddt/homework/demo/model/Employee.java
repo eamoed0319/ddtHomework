@@ -1,6 +1,7 @@
 package com.ddt.homework.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,7 +17,6 @@ import java.util.Date;
 @Table(name = "Employee")
 @Data
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler"})
-@JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
 public class Employee implements Serializable {
 
     public Employee() {
@@ -44,6 +44,7 @@ public class Employee implements Serializable {
     @LastModifiedDate
     private Date updateTime;
 
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="department_id")
     private Department department;

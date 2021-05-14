@@ -44,11 +44,7 @@ public class EmployeeImpl implements EmployeeService {
     public Page<Employee> findAll(String name, Long id, Integer age, String departmentName, Integer page, Integer size) {
         Specification<Employee> specification = combinationQueryConditions(name, id, age, departmentName);
         Pageable pageable = PageRequest.of(page, size);
-        Page<Employee> employeeList = employeeRepository.findAll(specification, pageable);
-        employeeList.getContent().forEach(employee -> {
-            employee.getDepartment().setEmployees(null);
-        });
-        return employeeList;
+        return employeeRepository.findAll(specification, pageable);
     }
 
     private Specification<Employee> combinationQueryConditions(String name, Long id, Integer age, String departmentName){
