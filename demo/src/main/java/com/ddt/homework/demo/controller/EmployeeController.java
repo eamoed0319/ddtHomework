@@ -5,6 +5,7 @@ import com.ddt.homework.demo.model.Employee;
 import com.ddt.homework.demo.model.EmployeeVO;
 import com.ddt.homework.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/{name}")
-    public EmployeeVO getOneEmployee(@PathVariable String name){
-        return employeeService.findByName(name);
-    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value = "/{name}")
+//    public EmployeeVO getOneEmployee(@PathVariable String name){
+//        return employeeService.findByName(name);
+//    }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/new")
@@ -57,5 +58,17 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable long id){
         employeeService.deleteById(id);
         return "SUCCESS";
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/all")
+    public Page<Employee> findByCondition(@RequestParam(required = false) String name,
+                                          @RequestParam(required = false) Long id,
+                                          @RequestParam(required = false) Integer age,
+                                          @RequestParam(required = false) String departmentId,
+                                          @RequestParam(defaultValue = "0") Integer page,
+                                          @RequestParam(defaultValue = "10") Integer size
+                                      ){
+        return employeeService.findAll(name, id, age, departmentId, page, size);
     }
 }
