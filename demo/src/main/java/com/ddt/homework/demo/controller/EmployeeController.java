@@ -62,6 +62,6 @@ public class EmployeeController {
                                           @RequestParam(required = false) String departmentName,
                                           @RequestParam(defaultValue = "0") Integer page,
                                           @RequestParam(defaultValue = "10") Integer size){
-        return employeeService.findAll(name, id, age, departmentName, page, size);
+        return employeeService.findAll(name, id, age, departmentName, page - 1, size);
     }
 }
