@@ -16,12 +16,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(value = "/{name}")
-//    public EmployeeVO getOneEmployee(@PathVariable String name){
-//        return employeeService.findByName(name);
-//    }
-
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/new")
     public EmployeeVO addEmployee(@RequestParam String name,
@@ -65,10 +59,9 @@ public class EmployeeController {
     public Page<Employee> findByCondition(@RequestParam(required = false) String name,
                                           @RequestParam(required = false) Long id,
                                           @RequestParam(required = false) Integer age,
-                                          @RequestParam(required = false) String departmentId,
+                                          @RequestParam(required = false) String departmentName,
                                           @RequestParam(defaultValue = "0") Integer page,
-                                          @RequestParam(defaultValue = "10") Integer size
-                                      ){
-        return employeeService.findAll(name, id, age, departmentId, page, size);
+                                          @RequestParam(defaultValue = "10") Integer size){
+        return employeeService.findAll(name, id, age, departmentName, page, size);
     }
 }

@@ -1,6 +1,7 @@
 package com.ddt.homework.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "Department")
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler"})
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
 public class Department implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package com.ddt.homework.demo.servoceImpl;
 
 import com.ddt.homework.demo.dao.EmployeeRepository;
+import com.ddt.homework.demo.model.Department;
 import com.ddt.homework.demo.model.Employee;
 import com.ddt.homework.demo.model.EmployeeVO;
 import com.ddt.homework.demo.service.EmployeeService;
@@ -23,11 +24,6 @@ public class EmployeeImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public EmployeeVO findByName(String name) {
-        return new EmployeeVO(employeeRepository.findByName(name));
-    }
-
-    @Override
     @Transactional
     public EmployeeVO save(Employee Employee) {
         return new EmployeeVO(employeeRepository.save(Employee));
@@ -46,6 +42,16 @@ public class EmployeeImpl implements EmployeeService {
 
     @Override
     public Page<Employee> findAll(String name, Long id, Integer age, String departmentName, Integer page, Integer size) {
+        Specification<Employee> specification = combinationQueryConditions(name, id, age, departmentName);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Employee> employeeList = employeeRepository.findAll(specification, pageable);
+        employeeList.getContent().forEach(employee -> {
+            employee.getDepartment().setEmployees(null);
+        });
+        return employeeList;
+    }
+
+    private Specification<Employee> combinationQueryConditions(String name, Long id, Integer age, String departmentName){
         Specification<Employee> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<Predicate>();
             if (name != null && !"".equals(name)) {
@@ -58,15 +64,11 @@ public class EmployeeImpl implements EmployeeService {
                 predicates.add(cb.equal(root.<Integer>get("age"), age));
             }
             if (departmentName != null && !"".equals(departmentName)) {
-                predicates.add(cb.equal(root.<String>get("departmentName"), departmentName));
+                Join<Employee, Department> departments = root.join("department");
+                predicates.add(cb.equal(departments.get("name"), departmentName));
             }
             return cb.and(predicates.toArray(new Predicate[predicates.size()]));
         };
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Employee> employeeList = employeeRepository.findAll(specification, pageable);
-        employeeList.getContent().forEach(employee -> {
-            employee.getDepartment().setEmployees(new ArrayList<>());
-        });
-        return employeeList;
+        return specification;
     }
 }

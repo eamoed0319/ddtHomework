@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 
 public interface EmployeeService {
-    EmployeeVO findByName(String name);
 
     EmployeeVO save(Employee employee);
 
