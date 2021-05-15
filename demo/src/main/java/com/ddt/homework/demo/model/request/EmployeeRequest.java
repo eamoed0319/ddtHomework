@@ -16,6 +16,19 @@ import java.util.Date;
 @Data
 public class EmployeeRequest implements Serializable {
 
+    public EmployeeRequest() {
+    }
+
+    public EmployeeRequest(Long id, String name, Integer gender, String phoneNumber, String address, Integer age, Long departmentId) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.age = age;
+        this.departmentId = departmentId;
+    }
+
     private Long id;
     private String name;
     private Integer gender;

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class EmployeeImpl implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -36,6 +36,11 @@ public class EmployeeImpl implements EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    /**
+     * 只是組參數故不寫測試
+     * @param request
+     * @return
+     */
     private Employee setAddEmployeeEntity(EmployeeRequest request){
         Department department = new Department();
         department.setId(request.getDepartmentId());
@@ -43,6 +48,11 @@ public class EmployeeImpl implements EmployeeService {
                 request.getAddress(), request.getAge(), department);
     }
 
+    /**
+     * 只是組參數故不寫測試
+     * @param request
+     * @return
+     */
     private Employee setUpdateEmployeeEntity(EmployeeRequest request){
         Department department = new Department();
         department.setId(request.getDepartmentId());
@@ -71,6 +81,14 @@ public class EmployeeImpl implements EmployeeService {
         return employeeRepository.findAll(specification, pageable);
     }
 
+    /**
+     * 只是組Specification物件故不寫測試
+     * @param name
+     * @param id
+     * @param age
+     * @param departmentName
+     * @return
+     */
     private Specification<Employee> combinationQueryConditions(String name, Long id, Integer age, String departmentName){
         Specification<Employee> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<Predicate>();
