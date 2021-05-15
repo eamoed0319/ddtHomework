@@ -1,19 +1,16 @@
 package com.ddt.homework.demo.service;
 
-import com.ddt.homework.demo.model.Employee;
-import com.ddt.homework.demo.model.EmployeeVO;
+import com.ddt.homework.demo.model.entity.Employee;
+import com.ddt.homework.demo.model.request.EmployeeRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.lang.Nullable;
 
 public interface EmployeeService {
 
-    EmployeeVO save(Employee employee);
+    Employee save(EmployeeRequest request);
 
     Employee getOne(long id);
 
     void deleteById(long id);
 
-    Page<Employee> findAll(String name, Long id, Integer age, String departmentName, Integer page, Integer size);
+    Page<Employee> find(String name, Long id, Integer age, String departmentName, Integer page, Integer size);
 }

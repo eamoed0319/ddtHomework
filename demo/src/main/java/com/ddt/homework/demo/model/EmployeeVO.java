@@ -1,10 +1,8 @@
 package com.ddt.homework.demo.model;
 
+import com.ddt.homework.demo.model.entity.Employee;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
 import java.util.Date;
 
 @Data

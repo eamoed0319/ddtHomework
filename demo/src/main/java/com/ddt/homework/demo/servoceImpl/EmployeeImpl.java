@@ -1,9 +1,9 @@
 package com.ddt.homework.demo.servoceImpl;
 
 import com.ddt.homework.demo.dao.EmployeeRepository;
-import com.ddt.homework.demo.model.Department;
-import com.ddt.homework.demo.model.Employee;
-import com.ddt.homework.demo.model.EmployeeVO;
+import com.ddt.homework.demo.model.entity.Department;
+import com.ddt.homework.demo.model.entity.Employee;
+import com.ddt.homework.demo.model.request.EmployeeRequest;
 import com.ddt.homework.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EmployeeImpl implements EmployeeService {
@@ -25,8 +26,31 @@ public class EmployeeImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public EmployeeVO save(Employee Employee) {
-        return new EmployeeVO(employeeRepository.save(Employee));
+    public Employee save(EmployeeRequest request) {
+        Employee employee;
+        if (Objects.isNull(request.getId())){
+            employee = setAddEmployeeEntity(request);
+        } else {
+            employee = setUpdateEmployeeEntity(request);
+        }
+        return employeeRepository.save(employee);
+    }
+
+    private Employee setAddEmployeeEntity(EmployeeRequest request){
+        Department department = new Department();
+        department.setId(request.getDepartmentId());
+        return new Employee(request.getName(), request.getGender(), request.getPhoneNumber(),
+                request.getAddress(), request.getAge(), department);
+    }
+
+    private Employee setUpdateEmployeeEntity(EmployeeRequest request){
+        Department department = new Department();
+        department.setId(request.getDepartmentId());
+        Employee employee = new Employee(request.getName(), request.getGender(), request.getPhoneNumber(),
+                request.getAddress(), request.getAge(), department);
+        employee.setId(request.getId());
+        employee.setCreateTime(getOne(request.getId()).getCreateTime());
+        return employee;
     }
 
     @Override
@@ -41,9 +65,9 @@ public class EmployeeImpl implements EmployeeService {
     }
 
     @Override
-    public Page<Employee> findAll(String name, Long id, Integer age, String departmentName, Integer page, Integer size) {
+    public Page<Employee> find(String name, Long id, Integer age, String departmentName, Integer page, Integer size) {
         Specification<Employee> specification = combinationQueryConditions(name, id, age, departmentName);
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page - 1, size);
         return employeeRepository.findAll(specification, pageable);
     }
 
