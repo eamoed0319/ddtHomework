@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -30,10 +31,16 @@ public class EmployeeRequest implements Serializable {
     }
 
     private Long id;
+    @NotBlank
     private String name;
+    @NotNull
     private Integer gender;
+    @NotBlank
     private String phoneNumber;
+    @NotBlank
     private String address;
+    @NotNull
     private Integer age;
+    @NotNull
     private Long departmentId;
 }

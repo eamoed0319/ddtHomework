@@ -1,6 +1,5 @@
 package com.ddt.homework.demo.controller;
 
-import com.ddt.homework.demo.model.entity.Department;
 import com.ddt.homework.demo.model.entity.Employee;
 import com.ddt.homework.demo.model.request.EmployeeRequest;
 import com.ddt.homework.demo.service.EmployeeService;
@@ -10,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/employee")
@@ -23,13 +22,13 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping
-    public Employee addEmployee(@RequestBody EmployeeRequest request){
+    public Employee addEmployee(@Valid @RequestBody EmployeeRequest request){
         return employeeService.save(request);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public Employee updateEmployee(@RequestBody EmployeeRequest request){
+    public Employee updateEmployee(@Valid @RequestBody EmployeeRequest request){
         return employeeService.save(request);
     }
 
@@ -47,7 +46,7 @@ public class EmployeeController {
                                           @RequestParam(required = false) Integer age,
                                           @RequestParam(required = false) String departmentName,
                                           @RequestParam(defaultValue = "1", required = false) Integer page,
-                                          @RequestParam(defaultValue = "10", required = false) @Max(value=10) Integer pageSize){
+                                          @RequestParam(defaultValue = "10", required = false) @Max(value=10, message = "pageSize必須小於或等於10") Integer pageSize){
         return employeeService.find(name, id, age, departmentName, page, pageSize);
     }
 }
