@@ -1,7 +1,9 @@
 package com.worldline.interview.engine.implement;
 
-import com.worldline.interview.FuelType;
 import com.worldline.interview.engine.Engine;
+import com.worldline.interview.fuel.FuelType;
+import com.worldline.interview.fuel.implement.Coal;
+import com.worldline.interview.fuel.implement.Wood;
 
 public class SteamEngine extends Engine {
 
@@ -13,7 +15,7 @@ public class SteamEngine extends Engine {
 
     @Override
     public void checkFuelType(FuelType fuelType) {
-        if (!FuelType.WOOD.equals(fuelType) && !FuelType.COAL.equals(fuelType)) {
+        if (!(fuelType instanceof Wood) && !(fuelType instanceof Coal)) {
             throw new IllegalStateException("Wrong fuel type.");
         }
     }

@@ -1,7 +1,9 @@
 package com.worldline.interview.engine.implement;
 
 import com.worldline.interview.engine.Engine;
-import com.worldline.interview.FuelType;
+import com.worldline.interview.fuel.FuelType;
+import com.worldline.interview.fuel.implement.Diesel;
+import com.worldline.interview.fuel.implement.Petrol;
 
 public class InternalCombustionEngine extends Engine {
 
@@ -13,7 +15,7 @@ public class InternalCombustionEngine extends Engine {
 
     @Override
     public void checkFuelType(FuelType fuelType) {
-        if (!FuelType.PETROL.equals(fuelType) && !FuelType.DIESEL.equals(fuelType)) {
+        if (!(fuelType instanceof Petrol) && !(fuelType instanceof Diesel)) {
             throw new IllegalStateException("Wrong fuel type.");
         }
     }

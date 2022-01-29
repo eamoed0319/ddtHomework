@@ -15,7 +15,7 @@ public class WidgetMachine {
         double cost = 0;
 
         if (engine.isRunning()) {
-            cost = produce(quantity, engine);
+            cost = produce(quantity);
         }
 
         engine.stop();
@@ -23,7 +23,7 @@ public class WidgetMachine {
         return cost;
     }
 
-    private double produce(int quantity, Engine engine) {
+    private double produce(int quantity) {
         int batch = 0;
         int batchCount = 0;
 

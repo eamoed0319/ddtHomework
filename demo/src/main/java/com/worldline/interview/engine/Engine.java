@@ -1,6 +1,6 @@
 package com.worldline.interview.engine;
 
-import com.worldline.interview.FuelType;
+import com.worldline.interview.fuel.FuelType;
 
 public abstract class Engine {
 
@@ -56,4 +56,4 @@ public abstract class Engine {
 
     public abstract int getBatchSize();
 
-    }
+}
