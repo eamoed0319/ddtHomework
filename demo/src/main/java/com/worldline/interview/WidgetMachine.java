@@ -23,7 +23,7 @@ public class WidgetMachine {
         return cost;
     }
 
-    private double produce(int quantity) {
+    private Double produce(int quantity) {
         int batch = 0;
         int batchCount = 0;
 

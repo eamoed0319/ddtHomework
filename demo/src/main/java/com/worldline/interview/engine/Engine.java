@@ -50,10 +50,10 @@ public abstract class Engine {
 
     public abstract void checkFuelType(FuelType fuelType);
 
-    public double getCostPerBatch() {
+    public Double getCostPerBatch() {
         return this.requiredFuelType.getCostPerBatch();
     }
 
-    public abstract int getBatchSize();
+    public abstract Integer getBatchSize();
 
 }

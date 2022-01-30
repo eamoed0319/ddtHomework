@@ -21,7 +21,7 @@ public class InternalCombustionEngine extends Engine {
     }
 
     @Override
-    public int getBatchSize() {
+    public Integer getBatchSize() {
         return BATCH_SIZE;
     }
 
